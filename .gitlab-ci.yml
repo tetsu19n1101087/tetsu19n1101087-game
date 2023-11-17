@@ -1,0 +1,29 @@
+image: node:18.15.0
+
+stages:
+  - install
+  - deploy
+
+install:
+  stage: install
+  only:
+    refs:
+    - main
+  script:
+    - yarn install
+  artifacts:
+    paths:
+    - node_modules/
+  cache:
+    paths:
+    - node_modules/
+
+deploy:
+  stage: deploy
+  only:
+    refs:
+    - main
+  script:
+    - yarn build
+    - yarn global add firebase-tools
+    - firebase deploy --token $FIREBASE_TOKEN
