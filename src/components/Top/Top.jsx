@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import Button from './Button';
+import styled from "styled-components";
+import Button from "../Button";
 
 function Top(props) {
   return (
     <div>
       <Title>NS-TYPING</Title>
       <p>数字・記号専用のタイピング練習ゲーム</p>
-      <Button onClick={() => props.setStatus('play')}>プレイする</Button>
+      <Button onClick={() => props.setStatus("play")}>プレイする</Button>
     </div>
   );
 }

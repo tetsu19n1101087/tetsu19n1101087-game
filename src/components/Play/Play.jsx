@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Button from './Button';
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import Button from "../Button";
 
-function Play({setStatus, handleMiss, setStartTime, setEndTime}) {
+function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [typingList, setTypingList] = useState(['']);
+  const [typingList, setTypingList] = useState([""]);
 
   function handleKeyDown(e) {
     if (e.key === typingList[questionNumber]) {
       setQuestionNumber(questionNumber + 1);
-    } else if (['Shift', 'Alt', 'Meta', 'Eisu', 'KanjiMode'].includes(e.key)) {
+    } else if (["Shift", "Alt", "Meta", "Eisu", "KanjiMode"].includes(e.key)) {
       return;
     } else {
       handleMiss();
@@ -17,7 +17,9 @@ function Play({setStatus, handleMiss, setStartTime, setEndTime}) {
   }
 
   useEffect(() => {
-    const characterList = '0123456789!"#$%&\'()-=^~¥|@`[]{};+:*,<>./?'.split('');
+    const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./?".split(
+      ""
+    );
     let randomList = [];
     for (let i = 0; i < 10; i++) {
       const randomIndex = Math.floor(Math.random() * characterList.length);
@@ -27,17 +29,17 @@ function Play({setStatus, handleMiss, setStartTime, setEndTime}) {
     setTypingList(randomList);
 
     setStartTime(new Date());
-  },[setStartTime])
+  }, [setStartTime]);
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
       setEndTime(new Date());
-      setStatus('result')
+      setStatus("result");
     }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   });
 
@@ -48,7 +50,7 @@ function Play({setStatus, handleMiss, setStartTime, setEndTime}) {
       <Flex>
         <span>問題数: 10</span>
         <span>正解数: {questionNumber}</span>
-        <Button onClick={() => setStatus('top')}>タイトルに戻る</Button>
+        <Button onClick={() => setStatus("top")}>タイトルに戻る</Button>
       </Flex>
     </div>
   );
@@ -62,7 +64,7 @@ const Character = styled.p`
 const Flex = styled.div`
   display: flex;
   justify-content: space-around;
-  align-items: center
+  align-items: center;
 `;
 
 export default Play;

@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import Top from './Top';
-import Play from './Play';
-import Result from './Result';
+import { useState } from "react";
+import styled from "styled-components";
+import Top from "./Top";
+import Play from "./Play";
+import Result from "./Result";
 
 function App() {
-  const [status, setStatus] = useState('top');
+  const [status, setStatus] = useState("top");
   const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0)
+  const [endTime, setEndTime] = useState(0);
   const [missTypingNumber, setMissTypingNumber] = useState(0);
 
   function handleMiss() {
@@ -17,34 +17,50 @@ function App() {
   let contents;
 
   switch (status) {
-    case 'top':
+    case "top":
       contents = <Top setStatus={setStatus} />;
       break;
-    case 'play':
-      contents = <Play setStatus={setStatus} handleMiss={handleMiss} setStartTime={setStartTime} setEndTime={setEndTime} />;
+    case "play":
+      contents = (
+        <Play
+          setStatus={setStatus}
+          handleMiss={handleMiss}
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+        />
+      );
       break;
-    case 'result':
-      contents = <Result setStatus={setStatus} time={((endTime - startTime)/1000).toFixed(2)} missTypingNumber={missTypingNumber} />;
+    case "result":
+      contents = (
+        <Result
+          setStatus={setStatus}
+          time={((endTime - startTime) / 1000).toFixed(2)}
+          missTypingNumber={missTypingNumber}
+        />
+      );
       break;
     default:
       return;
   }
-  
+
   return (
     <Wrapper>
       <Header>
         <Title>NS-TYPING</Title>
       </Header>
-      <Game>
-        {contents}
-      </Game>
+      <Game>{contents}</Game>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   height: 100vh;
-  background-image: repeating-linear-gradient(white, white 5px, #dadada 5px, #dadada 10px);
+  background-image: repeating-linear-gradient(
+    white,
+    white 5px,
+    #dadada 5px,
+    #dadada 10px
+  );
 `;
 
 const Header = styled.div`

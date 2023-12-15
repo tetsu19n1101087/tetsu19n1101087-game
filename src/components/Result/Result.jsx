@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import Button from './Button';
+import styled from "styled-components";
+import Button from "../Button";
 
 function Result(props) {
   return (
@@ -17,7 +17,9 @@ function Result(props) {
           </tr>
           <tr>
             <TableHeader>平均キータイプ数</TableHeader>
-            <TableData>{((10 + props.missTypingNumber) / props.time).toFixed(1)} 回/秒</TableData>
+            <TableData>
+              {((10 + props.missTypingNumber) / props.time).toFixed(1)} 回/秒
+            </TableData>
           </tr>
           <tr>
             <TableHeader>ミスタイプ数</TableHeader>
@@ -25,11 +27,13 @@ function Result(props) {
           </tr>
           <tr>
             <TableHeader>正確率</TableHeader>
-            <TableData>{(10 / (10 + props.missTypingNumber) * 100).toFixed(2)} %</TableData>
+            <TableData>
+              {((10 / (10 + props.missTypingNumber)) * 100).toFixed(2)} %
+            </TableData>
           </tr>
         </tbody>
       </Table>
-      <Button onClick={() => props.setStatus('top')}>タイトルに戻る</Button>
+      <Button onClick={() => props.setStatus("top")}>タイトルに戻る</Button>
     </div>
   );
 }
@@ -49,7 +53,7 @@ const TableHeader = styled.th`
 
 const TableData = styled.td`
   text-align: end;
-  color: #0FD994;
+  color: #0fd994;
   width: 150px;
 `;
 
