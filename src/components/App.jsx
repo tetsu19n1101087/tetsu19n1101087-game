@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Header from './Header';
 import Top from './Top';
 import Play from './Play';
 import Result from './Result';
@@ -33,7 +32,9 @@ function App() {
   
   return (
     <Wrapper>
-      <Header />
+      <Header>
+        <Title>NS-TYPING</Title>
+      </Header>
       <Game>
         {contents}
       </Game>
@@ -44,6 +45,23 @@ function App() {
 const Wrapper = styled.div`
   height: 100vh;
   background-image: repeating-linear-gradient(white, white 5px, #dadada 5px, #dadada 10px);
+`;
+
+const Header = styled.div`
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  background-color: rgb(0, 122, 204);
+  line-height: 80px;
+`;
+
+const Title = styled.span`
+  font-size: 50px;
+  color: white;
+  text-shadow: 1px 2px black;
+  font-family: impact, sans-serif;
+  transform: scale(2, 1);
+  display: inline-block;
 `;
 
 const Game = styled.div`
