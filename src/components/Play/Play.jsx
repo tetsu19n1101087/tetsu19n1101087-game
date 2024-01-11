@@ -17,7 +17,7 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   }
 
   useEffect(() => {
-    const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./?".split(
+    const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split(
       ""
     );
     let randomList = [];
@@ -46,7 +46,7 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   return (
     <div>
       <h3>表示された数字または記号のキーを押してください</h3>
-      <Character>{typingList[questionNumber]}</Character>
+      <Character data-testid="character">{typingList[questionNumber]}</Character>
       <Flex>
         <span>問題数: 10</span>
         <span>正解数: {questionNumber}</span>

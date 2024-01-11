@@ -46,7 +46,7 @@ function App() {
   return (
     <Wrapper>
       <Header>
-        <Title>NS-TYPING</Title>
+        <Title data-testid="title">NS-TYPING</Title>
       </Header>
       <Game>{contents}</Game>
     </Wrapper>

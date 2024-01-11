@@ -2,6 +2,7 @@ image: node:18.15.0
 
 stages:
   - install
+  - test
   - deploy
 
 install:
@@ -17,6 +18,14 @@ install:
   cache:
     paths:
     - node_modules/
+
+test:
+  stage: test
+  only:
+    refs:
+    - main
+  script:
+    - yarn test
 
 deploy:
   stage: deploy
