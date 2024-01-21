@@ -36,7 +36,8 @@ describe('App Component', () => {
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
     
     for (let i = 0; i < 10; i++) {
-      await user.keyboard(screen.getByTestId('character').textContent);
+      const key = await screen.getByTestId('character').textContent;
+      await user.keyboard(key);
     }
     
     expect(screen.getByText('結果')).toBeInTheDocument();
