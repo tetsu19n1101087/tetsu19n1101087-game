@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
 import userEvent from '@testing-library/user-event';
+import App from './App';
 
 describe('App Component', () => {
   beforeEach(() => render(<App />));
@@ -28,6 +28,23 @@ describe('App Component', () => {
 
     const title = screen.getByRole('heading', {name: 'NS-TYPING'});
     expect(title).toBeInTheDocument();
-  })
+  });
+  
+  test('ゲームがクリアでき、その後タイトルに戻ることができる', async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', {name: 'プレイする'}));
+    
+    for (let i = 0; i < 10; i++) {
+      await user.keyboard(screen.getByTestId('character').textContent);
+    }
+    
+    expect(screen.getByText('結果')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', {name: 'タイトルに戻る'}));
+
+    const title = screen.getByRole('heading', {name: 'NS-TYPING'});
+    expect(title).toBeInTheDocument();
+  });
 });
 
