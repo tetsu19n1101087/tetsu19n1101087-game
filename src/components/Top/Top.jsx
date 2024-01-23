@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Button from "../Button";
 
 function Top(props) {
+  props.resetMiss();
+  
   return (
     <div>
       <Title>NS-TYPING</Title>

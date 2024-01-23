@@ -14,11 +14,20 @@ function App() {
     setMissTypingNumber(missTypingNumber + 1);
   }
 
+  function resetMiss() {
+    setMissTypingNumber(0);
+  }
+
   let contents;
 
   switch (status) {
     case "top":
-      contents = <Top setStatus={setStatus} />;
+      contents = (
+        <Top
+          setStatus={setStatus}
+          resetMiss={resetMiss}
+        />
+      );
       break;
     case "play":
       contents = (

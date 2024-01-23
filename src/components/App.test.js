@@ -36,7 +36,7 @@ describe('App Component', () => {
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
     
     for (let i = 0; i < 10; i++) {
-      const key = await screen.getByTestId('character').textContent;
+      const key = await screen.findByTestId('character').textContent;
       await user.keyboard(key);
     }
     
@@ -46,6 +46,42 @@ describe('App Component', () => {
 
     const title = screen.getByRole('heading', {name: 'NS-TYPING'});
     expect(title).toBeInTheDocument();
+  });
+
+  test('タイトルに戻るとミスのカウントがリセットされる', async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', {name: 'プレイする'}));
+    
+    await user.keyboard('abc');
+    for (let i = 0; i < 10; i++) {
+      const key = await screen.findByTestId('character').textContent;
+      await user.keyboard(key);
+    }
+    expect(screen.getAllByRole('cell')[3]).toHaveTextContent('3');
+
+    await user.click(screen.getByRole('button', {name: 'タイトルに戻る'}));
+
+    await user.click(screen.getByRole('button', {name: 'プレイする'}));
+
+    screen.debug();
+    
+    for (let i = 0; i < 10; i++) {
+      const key = await screen.findByTestId('character').textContent;
+      await user.keyboard(key);
+    }
+    expect(screen.getAllByRole('cell')[3]).toHaveTextContent('0');
+  });
+  
+  test('テスト', async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByRole('button', {name: 'プレイする'}));
+
+    for (let i = 0; i < 10; i++) {
+      const key = await screen.findByTestId('character').textContent;
+      await user.keyboard(key);
+    }
   });
 });
 

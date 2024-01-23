@@ -4,7 +4,7 @@ import Top from './Top';
 
 describe('Top Component', () => {
   test('テキストが描画されている', () => {
-    render(<Top />);
+    render(<Top resetMiss={jest.fn()} />);
     
     const title = screen.getByText('NS-TYPING');
     expect(title).toBeInTheDocument();
@@ -20,7 +20,7 @@ describe('Top Component', () => {
     const user = userEvent.setup();
 
     const setStatus = jest.fn();
-    render(<Top setStatus={setStatus} />);
+    render(<Top setStatus={setStatus} resetMiss={jest.fn()} />);
 
     const button = screen.getByRole('button', {name: 'プレイする'});
 
