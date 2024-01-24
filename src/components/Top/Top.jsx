@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import Button from "../Button";
 
 function Top(props) {
-  props.resetMiss();
+  useEffect(() => {
+    props.resetMiss();
+  });
   
   return (
     <div>

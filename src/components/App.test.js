@@ -36,8 +36,14 @@ describe('App Component', () => {
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
     
     for (let i = 0; i < 10; i++) {
-      const key = await screen.findByTestId('character').textContent;
-      await user.keyboard(key);
+      const key = await screen.findByTestId('character', {timeout: 5000});
+      if (key.textContent == '[') {
+        await user.keyboard('[[');
+      } else if (key.textContent == '{') {
+        await user.keyboard('{{');
+      } else {
+        await user.keyboard(key.textContent);
+      }
     }
     
     expect(screen.getByText('結果')).toBeInTheDocument();
@@ -55,8 +61,14 @@ describe('App Component', () => {
     
     await user.keyboard('abc');
     for (let i = 0; i < 10; i++) {
-      const key = await screen.findByTestId('character').textContent;
-      await user.keyboard(key);
+      const key = await screen.findByTestId('character', {timeout: 5000});
+      if (key.textContent == '[') {
+        await user.keyboard('[[');
+      } else if (key.textContent == '{') {
+        await user.keyboard('{{');
+      } else {
+        await user.keyboard(key.textContent);
+      }
     }
     expect(screen.getAllByRole('cell')[3]).toHaveTextContent('3');
 
@@ -64,24 +76,17 @@ describe('App Component', () => {
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
 
-    screen.debug();
-    
     for (let i = 0; i < 10; i++) {
-      const key = await screen.findByTestId('character').textContent;
-      await user.keyboard(key);
+      const key = await screen.findByTestId('character', {timeout: 5000});
+      if (key.textContent == '[') {
+        await user.keyboard('[[');
+      } else if (key.textContent == '{') {
+        await user.keyboard('{{');
+      } else {
+        await user.keyboard(key.textContent);
+      }
     }
     expect(screen.getAllByRole('cell')[3]).toHaveTextContent('0');
-  });
-  
-  test('テスト', async () => {
-    const user = userEvent.setup();
-
-    await user.click(screen.getByRole('button', {name: 'プレイする'}));
-
-    for (let i = 0; i < 10; i++) {
-      const key = await screen.findByTestId('character').textContent;
-      await user.keyboard(key);
-    }
   });
 });
 
