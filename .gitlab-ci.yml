@@ -35,6 +35,7 @@ test2:
     refs:
     - main
   script:
+    - yarn add cypress
     - PORT=3000 yarn start &
     - yarn run wait-on http://localhost:3000
     - yarn cypress:run
