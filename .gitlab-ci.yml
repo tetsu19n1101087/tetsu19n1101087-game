@@ -18,6 +18,7 @@ install:
   cache:
     paths:
     - node_modules/
+    - ~/.cache/Cypress
 
 test:
   stage: test
