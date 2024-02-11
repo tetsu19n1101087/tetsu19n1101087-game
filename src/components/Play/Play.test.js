@@ -28,7 +28,13 @@ describe('Play Component', () => {
     render(<Play setStartTime={jest.fn()} />);
 
     const key = await screen.findByTestId('character', {timeout: 5000});
-    await user.keyboard(key.textContent);
+    if (key.textContent == '[') {
+      await user.keyboard('[[');
+    } else if (key.textContent == '{') {
+      await user.keyboard('{{');
+    } else {
+      await user.keyboard(key.textContent);
+    }
     expect(screen.getByTestId('character')).not.toHaveTextContent(key);
   });
 
@@ -40,7 +46,13 @@ describe('Play Component', () => {
     expect(screen.getByText(/正解数:/)).toHaveTextContent('正解数: 0');
 
     const key = await screen.findByTestId('character', {timeout: 5000});
-    await user.keyboard(key.textContent);
+    if (key.textContent == '[') {
+      await user.keyboard('[[');
+    } else if (key.textContent == '{') {
+      await user.keyboard('{{');
+    } else {
+      await user.keyboard(key.textContent);
+    }
     expect(screen.getByText(/正解数:/)).toHaveTextContent('正解数: 1');
   });
 
