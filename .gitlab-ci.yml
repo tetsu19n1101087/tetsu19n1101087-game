@@ -25,9 +25,11 @@ test:
     refs:
     - main
   script:
+    - apt-get install xvfb
     - yarn test
     - yarn run cypress install
     - PORT=3000 yarn start &
+    - wait-on http://localhost:3000
     - yarn cypress:run
 
 deploy:
