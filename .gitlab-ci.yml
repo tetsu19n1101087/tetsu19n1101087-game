@@ -25,6 +25,7 @@ test:
     refs:
     - main
   script:
+    - apt-get update
     - apt-get install xvfb
     - yarn test
     - yarn run cypress install
