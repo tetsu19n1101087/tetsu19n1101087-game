@@ -18,7 +18,6 @@ install:
   cache:
     paths:
     - node_modules/
-    - ~/.cache/Cypress
 
 test:
   stage: test
@@ -27,6 +26,7 @@ test:
     - main
   script:
     - yarn test
+    - yarn run cypress install
     - PORT=3000 yarn start &
     - yarn cypress:run
 
