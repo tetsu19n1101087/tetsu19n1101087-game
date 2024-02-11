@@ -2,7 +2,8 @@ image: node:18.15.0
 
 stages:
   - install
-  - test
+  - test1
+  - test2
   - deploy
 
 install:
@@ -19,16 +20,21 @@ install:
     paths:
     - node_modules/
 
-test:
-  stage: test
+test1:
+  stage: test1
   only:
     refs:
     - main
   script:
-    - apt-get update
-    - apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
     - yarn test
-    - yarn run cypress install
+
+test2:
+  image: cypress/browsers:node-20.9.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+  stage: test2
+  only:
+    refs:
+    - main
+  script:
     - PORT=3000 yarn start &
     - wait-on http://localhost:3000
     - yarn cypress:run
