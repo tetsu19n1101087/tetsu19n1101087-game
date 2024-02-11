@@ -36,7 +36,7 @@ test2:
     - main
   script:
     - PORT=3000 yarn start &
-    - wait-on http://localhost:3000
+    - yarn run wait-on http://localhost:3000
     - yarn cypress:run
 
 deploy:
