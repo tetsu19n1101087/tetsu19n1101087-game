@@ -47,4 +47,5 @@ deploy:
     - main
   script:
     - yarn build
+    - yarn add firebase-tools
     - firebase deploy --token $FIREBASE_TOKEN
