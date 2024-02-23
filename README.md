@@ -17,17 +17,22 @@
 minikube start
 ```
 
-### 2. Minikube の Docker デーモンでビルドするための設定
+### 2. kubectl のインストール（macOS）
+```
+brew install kubectl
+```
+
+### 3. Minikube の Docker デーモンでビルドするための設定
 ```
 eval $(minikube docker-env)
 ```
 
-### 3. Docker イメージを作成
+### 4. Docker イメージを作成
 ```
 docker build -t game:1 .
 ```
 
-### 4. マニフェストファイル（yaml）から Deployment と Service を作成
+### 5. マニフェストファイル（yaml）から Deployment と Service を作成
 ```
 kubectl apply -f deployment-service.yaml
 ```
