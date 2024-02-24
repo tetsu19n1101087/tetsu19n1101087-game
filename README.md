@@ -12,14 +12,14 @@
 
 ## 環境構築
 
-### 1. Minikube を起動し、クラスターを作成
+### 1. minikube, kubectl のインストール（macOS）
 ```
-minikube start
+brew install minikube kubectl
 ```
 
-### 2. kubectl のインストール（macOS）
+### 2. Minikube を起動し、クラスターを作成
 ```
-brew install kubectl
+minikube start
 ```
 
 ### 3. Minikube の Docker デーモンでビルドするための設定
