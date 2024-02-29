@@ -12,39 +12,57 @@
 
 ## 環境構築
 
-### 1. minikube, kubectl のインストール（macOS）
+### Minikube, kubectl のインストール（macOS）
 
 ```
 brew install minikube kubectl
 ```
 
-### 2. Minikube を起動し、クラスターを作成
+### Minikube を起動し、クラスターを作成
 
 ```
 minikube start
 ```
 
-### 3. Minikube の Docker デーモンでビルドするための設定
+### Ingressコントローラーを有効化
+```
+minikube addons enable ingress
+```
+
+### Minikube の Docker デーモンでビルドするための設定
 
 ```
 eval $(minikube docker-env)
 ```
 
-### 4. Docker イメージを作成
+### Docker イメージを作成
 
 ```
 docker build -t game:1 .
 ```
 
-### 5. マニフェストファイル（yaml）から Deployment と Service を作成
+### マニフェストファイル（yaml）から Deployment, Service, Ingress を作成
 
 ```
-kubectl apply -f deployment-service.yaml
+kubectl apply -f k8s/
 ```
 
-### 6. Service の URL を取得
+### Service の URL を取得
 
 ```
 minikube service tetsu19n1101087-game-service --url
 ```
 出力された URL にアクセスする。
+
+### host名で名前解決できるよう設定
+`minikube ip` で外部のIPを取得。
+
+次のように取得したIPと名前解決したいホスト名を、`/etc/hosts` に追記する。
+```
+192.168.74.4 tetsu19n1101087-game.app
+```
+
+### host名でアプリにアクセスできることを確認
+```
+curl tetsu19n1101087-game.app
+```
