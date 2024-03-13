@@ -66,3 +66,21 @@ minikube service tetsu19n1101087-game-service --url
 ```
 curl tetsu19n1101087-game.app
 ```
+<br>
+
+## Skaffold による環境構築
+Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
+
+### マニフェストファイル（skaffold.yaml）を作成
+```
+skaffold init
+```
+ビルダーを尋ねられたら Dockerfile を選択する。  
+設定を `skaffold.yaml` に記述するか尋ねられるので yes を選択する。
+
+### ビルド & デプロイ
+```
+skaffold dev
+```
+ソースコードに変更があった場合は、自動でビルド・デプロイを行なってくれる。  
+同様に、host名でアプリにアクセスできることを確認する。
