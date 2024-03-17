@@ -3,14 +3,15 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('App Component', () => {
-  beforeEach(() => render(<App />));
-
   test('タイトルがレンダーされている', () => {
+    render(<App />);
     const title = screen.getByTestId('title');
     expect(title).toHaveTextContent('NS-TYPING');
   });
 
   test('プレイ画面に遷移する', async () => {
+    render(<App />);
+    
     const user = userEvent.setup();
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
@@ -20,6 +21,8 @@ describe('App Component', () => {
   });
 
   test('プレイ画面からタイトル画面に遷移する', async () => {
+    render(<App />);
+    
     const user = userEvent.setup();
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
@@ -31,6 +34,8 @@ describe('App Component', () => {
   });
   
   test('ゲームがクリアでき、その後タイトルに戻ることができる', async () => {
+    render(<App />);
+    
     const user = userEvent.setup();
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
@@ -55,6 +60,8 @@ describe('App Component', () => {
   });
 
   test('タイトルに戻るとミスのカウントがリセットされる', async () => {
+    render(<App />);
+    
     const user = userEvent.setup();
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
