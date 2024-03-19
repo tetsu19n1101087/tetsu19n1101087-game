@@ -28,7 +28,7 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
     //setTypingList(randomList);
 
     async function getRandomList() {
-      await axios.get('http://localhost:3000')
+      await axios.get('http://localhost:3001')
         .then((res) => {
           setTypingList(res.data);
         })

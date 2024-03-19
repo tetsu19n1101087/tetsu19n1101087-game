@@ -6,6 +6,10 @@ describe('E2Eテスト', () => {
     
     cy.contains('プレイする').click();
 
+    cy.wait(1000);
+
+    cy.get('[data-testid="character"]').invoke('text').should('match', /[0123456789!"#\$%&'()\-=^~¥|@`\[\]{};\+:\*,<>\.\/\\\?]/)
+
     for (let i = 0; i < 10; i++) {
       cy.get('[data-testid="character"]').invoke('text').then((key) => {
         cy.get('body').trigger('keydown', { key });
@@ -34,6 +38,8 @@ describe('E2Eテスト', () => {
     cy.visit('http://localhost:3000');
 
     cy.contains('プレイする').click();
+
+    cy.wait(1000);
 
     cy.contains(/正解数:/).should('have.text', '正解数: 0');
 

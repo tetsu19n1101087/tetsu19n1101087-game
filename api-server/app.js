@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.NODE_ENV === 'docker' ? 5000 : 3000;
+const port = process.env.NODE_ENV === 'docker' ? 5000 : 3001;
 
 app.get('/', (req, res) => {
   const characterList = '0123456789!"#$%&\'()-=^~¥|@`[]{};+:*,<>./\\?'.split(
