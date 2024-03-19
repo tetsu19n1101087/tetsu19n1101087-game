@@ -1,10 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Play from './Play';
 
+async function waitForCharacter() {
+  await waitFor(() => {
+    const character = screen.getByTestId('character');
+    expect(character).toHaveTextContent(
+      /[0123456789!"#\$%&'()\-=^~¥|@`\[\]{};\+:\*,<>\.\/\\\?]/
+    );
+  });
+}
+
 describe('Play Component', () => {
-  test('テキストが描画されている', () => {
+  test('テキストが描画されている', async () => {
     render(<Play setStartTime={jest.fn()} />);
+
+    await waitForCharacter();
 
     const header = screen.getByText('表示された数字または記号のキーを押してください');
     expect(header).toBeInTheDocument();
@@ -27,6 +38,8 @@ describe('Play Component', () => {
     
     render(<Play setStartTime={jest.fn()} />);
 
+    await waitForCharacter();
+
     const key = await screen.findByTestId('character', {timeout: 5000});
     if (key.textContent == '[') {
       await user.keyboard('[[');
@@ -42,6 +55,8 @@ describe('Play Component', () => {
     const user = userEvent.setup();
 
     render(<Play setStartTime={jest.fn()} />);
+
+    await waitForCharacter();
 
     expect(screen.getByText(/正解数:/)).toHaveTextContent('正解数: 0');
 
@@ -62,6 +77,8 @@ describe('Play Component', () => {
     const handleMiss = jest.fn();
     render(<Play handleMiss={handleMiss} setStartTime={jest.fn()} />);
 
+    await waitForCharacter();
+
     await user.keyboard('abc');
     expect(handleMiss).toHaveBeenCalledTimes(3);
   });
@@ -71,6 +88,8 @@ describe('Play Component', () => {
 
     const handleMiss = jest.fn();
     render(<Play handleMiss={handleMiss} setStartTime={jest.fn()} />);
+
+    await waitForCharacter();
 
     await user.keyboard('{Shift}');
     await user.keyboard('{Alt}');
@@ -88,6 +107,8 @@ describe('Play Component', () => {
     const setEndTime = jest.fn();
     render(<Play setStartTime={setStartTime} setEndTime={setEndTime} setStatus={jest.fn()} />);
     
+    await waitForCharacter();
+
     expect(setStartTime).toHaveBeenCalled();
 
     for (let i = 0; i < 10; i++) {

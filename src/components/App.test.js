@@ -1,6 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+
+async function waitForCharacter() {
+  await waitFor(() => {
+    const character = screen.getByTestId('character');
+    expect(character).toHaveTextContent(
+      /[0123456789!"#\$%&'()\-=^~¥|@`\[\]{};\+:\*,<>\.\/\\\?]/
+    );
+  });
+}
 
 describe('App Component', () => {
   test('タイトルがレンダーされている', () => {
@@ -40,6 +49,8 @@ describe('App Component', () => {
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
     
+    await waitForCharacter();
+
     for (let i = 0; i < 10; i++) {
       const key = await screen.findByTestId('character', {timeout: 5000});
       if (key.textContent == '[') {
@@ -66,6 +77,8 @@ describe('App Component', () => {
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
     
+    await waitForCharacter();
+
     await user.keyboard('abc');
     for (let i = 0; i < 10; i++) {
       const key = await screen.findByTestId('character', {timeout: 5000});
@@ -82,6 +95,8 @@ describe('App Component', () => {
     await user.click(screen.getByRole('button', {name: 'タイトルに戻る'}));
 
     await user.click(screen.getByRole('button', {name: 'プレイする'}));
+
+    await waitForCharacter();
 
     for (let i = 0; i < 10; i++) {
       const key = await screen.findByTestId('character', {timeout: 5000});

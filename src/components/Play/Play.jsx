@@ -36,10 +36,11 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
           console.log(error);
           setTypingList(['取得できませんでした'])
         });
+      await setStartTime(new Date());
     }
     getRandomList();
-
-    setStartTime(new Date());
+    
+    //setStartTime(new Date());
   }, [setStartTime]);
 
   useEffect(() => {

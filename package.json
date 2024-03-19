@@ -44,11 +44,15 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.24.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.24.0",
+    "babel-jest": "^29.7.0",
     "cypress": "^13.6.4",
+    "msw": "^1.2.3",
     "prettier": "3.2.5"
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.1.1",
   "jest": {
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!axios/)"
