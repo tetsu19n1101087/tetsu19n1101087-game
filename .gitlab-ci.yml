@@ -36,6 +36,7 @@ test2:
     - main
   script:
     - yarn add cypress
+    - node api-server/app.js &
     - PORT=3000 yarn start &
     - yarn run wait-on http://localhost:3000
     - yarn cypress:run
