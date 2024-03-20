@@ -84,3 +84,21 @@ skaffold dev
 ```
 ソースコードに変更があった場合は、自動でビルド・デプロイを行なってくれる。  
 同様に、host名でアプリにアクセスできることを確認する。
+
+## API の構築
+
+### API の起動
+```
+node api-server/app.js
+```
+API サーバーを起動し、別タブから React アプリを起動する。
+```
+yarn start
+```
+
+### テスト
+```
+yarn test
+yarn run cypress:run
+```
+Cypress のテストは、API・React アプリを起動した状態で行う。
