@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../Button";
-import axios from "axios";
+//import axios from "axios";
 
 function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   const [questionNumber, setQuestionNumber] = useState(0);
