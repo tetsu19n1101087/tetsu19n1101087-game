@@ -17,31 +17,36 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
     }
   }
 
-  useEffect(() => {
-    //const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split("");
-    //let randomList = [];
-    //for (let i = 0; i < 10; i++) {
-    //  const randomIndex = Math.floor(Math.random() * characterList.length);
-    //  const randomElement = characterList.splice(randomIndex, 1)[0];
-    //  randomList.push(randomElement);
-    //}
-    //setTypingList(randomList);
+  //useEffect(() => {
+  //  async function getRandomList() {
+  //    await axios.get('http://api.tetsu19n1101087-game.app')
+  //      .then((res) => {
+  //        setTypingList(res.data);
+  //      })
+  //      .catch((error) => {
+  //        console.log(error);
+  //        setTypingList(['取得できませんでした'])
+  //      });
+  //    await setStartTime(new Date());
+  //  }
+  //  getRandomList();
+  //}, [setStartTime]);
 
-    async function getRandomList() {
-      await axios.get('http://localhost:3001')
-        .then((res) => {
-          setTypingList(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-          setTypingList(['取得できませんでした'])
-        });
-      await setStartTime(new Date());
+  useEffect(() => {
+    const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split(
+      ""
+    );
+    let randomList = [];
+    for (let i = 0; i < 10; i++) {
+      const randomIndex = Math.floor(Math.random() * characterList.length);
+      const randomElement = characterList.splice(randomIndex, 1)[0];
+      randomList.push(randomElement);
     }
-    getRandomList();
-    
-    //setStartTime(new Date());
+    setTypingList(randomList);
+
+    setStartTime(new Date());
   }, [setStartTime]);
+
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
