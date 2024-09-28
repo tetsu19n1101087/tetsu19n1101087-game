@@ -1,4 +1,4 @@
-apiVersion: skaffold/v4beta9
+apiVersion: skaffold/v4beta11
 kind: Config
 metadata:
   name: tetsu-n--game
@@ -7,8 +7,14 @@ build:
     - image: game
       docker:
         dockerfile: Dockerfile
+    - image: game-api
+      context: api-server
+      docker:
+        dockerfile: Dockerfile
 manifests:
   rawYaml:
     - k8s/deployment.yaml
     - k8s/ingress.yaml
     - k8s/service.yaml
+    - api-server/k8s/deployment.yaml
+    - api-server/k8s/service.yaml

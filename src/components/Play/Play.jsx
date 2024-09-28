@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../Button";
-//import axios from "axios";
+import axios from "axios";
 
 function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -17,35 +17,35 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
     }
   }
 
-  //useEffect(() => {
-  //  async function getRandomList() {
-  //    await axios.get('http://api.tetsu19n1101087-game.app')
-  //      .then((res) => {
-  //        setTypingList(res.data);
-  //      })
-  //      .catch((error) => {
-  //        console.log(error);
-  //        setTypingList(['取得できませんでした'])
-  //      });
-  //    await setStartTime(new Date());
-  //  }
-  //  getRandomList();
-  //}, [setStartTime]);
-
   useEffect(() => {
-    const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split(
-      ""
-    );
-    let randomList = [];
-    for (let i = 0; i < 10; i++) {
-      const randomIndex = Math.floor(Math.random() * characterList.length);
-      const randomElement = characterList.splice(randomIndex, 1)[0];
-      randomList.push(randomElement);
-    }
-    setTypingList(randomList);
-
-    setStartTime(new Date());
+   async function getRandomList() {
+     await axios.get('http://api.tetsu19n1101087-game.app')
+       .then((res) => {
+         setTypingList(res.data);
+       })
+       .catch((error) => {
+         console.log(error);
+         setTypingList(['error'])
+       });
+     await setStartTime(new Date());
+   }
+   getRandomList();
   }, [setStartTime]);
+
+  // useEffect(() => {
+  //   const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split(
+  //     ""
+  //   );
+  //   let randomList = [];
+  //   for (let i = 0; i < 10; i++) {
+  //     const randomIndex = Math.floor(Math.random() * characterList.length);
+  //     const randomElement = characterList.splice(randomIndex, 1)[0];
+  //     randomList.push(randomElement);
+  //   }
+  //   setTypingList(randomList);
+
+  //   setStartTime(new Date());
+  // }, [setStartTime]);
 
 
   useEffect(() => {

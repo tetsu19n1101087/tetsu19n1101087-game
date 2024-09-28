@@ -1,7 +1,8 @@
 FROM node:18
 WORKDIR /app
+ENV NODE_ENV=docker
 COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn/releases/yarn-4.1.0.cjs .yarn/releases/
+COPY .yarn/releases/*.cjs .yarn/releases/
 RUN yarn install --network-timeout 600000
 COPY . .
 CMD ["yarn", "start"]

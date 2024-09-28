@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tetsu19n1101087-game-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: tetsu19n1101087-game.app
@@ -14,3 +16,13 @@ spec:
                 name: tetsu19n1101087-game-service
                 port:
                   number: 3000
+    - host: api.tetsu19n1101087-game.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tetsu19n1101087-api-service
+                port:
+                  number: 5000

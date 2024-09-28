@@ -55,11 +55,9 @@ minikube service tetsu19n1101087-game-service --url
 出力された URL にアクセスする。
 
 ### host名で名前解決できるよう設定
-`minikube ip` で外部のIPを取得。
-
-次のように取得したIPと名前解決したいホスト名を、`/etc/hosts` に追記する。
+名前解決したいホスト名を、`/etc/hosts` に追記する。
 ```
-192.168.74.4 tetsu19n1101087-game.app
+127.0.0.1 tetsu19n1101087-game.app
 ```
 
 ### host名でアプリにアクセスできることを確認
@@ -70,6 +68,11 @@ curl tetsu19n1101087-game.app
 
 ## Skaffold による環境構築
 Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
+
+### Skaffold のインストール（macOS）
+```
+brew install skaffold
+```
 
 ### マニフェストファイル（skaffold.yaml）を作成
 ```
@@ -96,7 +99,7 @@ API サーバーを起動し、別タブから React アプリを起動する。
 yarn start
 ```
 
-### テスト
+## テスト
 ```
 yarn test
 yarn run cypress:run

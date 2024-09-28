@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tetsu19n1101087-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express
+  template:
+    metadata:
+      labels:
+        app: express
+    spec:
+      containers:
+        - name: game-api
+          image: game-api:1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
