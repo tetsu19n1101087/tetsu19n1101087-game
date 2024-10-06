@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCFtTXvYwzYeW_Exm7J8WXsUhuf90P5zso',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'tetsu19n1101087-game.firebaseapp.com',
   projectId: 'tetsu19n1101087-game',
   storageBucket: 'tetsu19n1101087-game.appspot.com',
