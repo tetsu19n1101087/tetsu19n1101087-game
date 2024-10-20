@@ -21,12 +21,7 @@ brew install minikube kubectl
 ### Minikube を起動し、クラスターを作成
 
 ```
-minikube start
-```
-
-### Ingressコントローラーを有効化
-```
-minikube addons enable ingress
+minikube start --addons=ingress
 ```
 
 ### Minikube の Docker デーモンでビルドするための設定
@@ -59,6 +54,12 @@ minikube service tetsu19n1101087-game-service --url
 ```
 127.0.0.1 tetsu19n1101087-game.app
 ```
+
+Minikube とホストマシンをトンネリング（別タブで行う）。
+```
+minikube tunnel
+```
+
 
 ### host名でアプリにアクセスできることを確認
 ```
