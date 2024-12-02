@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-const handlers = rest.get('http://localhost:3001/', (req, res, ctx) => {
+const handlers = rest.get('http://api.tetsu19n1101087-game.local', (req, res, ctx) => {
   const characterList = '0123456789!"#$%&\'()-=^~¥|@`[]{};+:*,<>./\\?'.split(
     ''
   );

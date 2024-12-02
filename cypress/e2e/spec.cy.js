@@ -1,6 +1,6 @@
 describe('E2Eテスト', () => {
   it('ゲームがクリアでき、その後タイトルに戻ることができる', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://tetsu19n1101087-game.local');
 
     cy.contains('数字・記号専用のタイピング練習ゲーム').should('exist');
     
@@ -25,7 +25,7 @@ describe('E2Eテスト', () => {
   });
 
   it('プレイ画面からタイトル画面に遷移する', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://tetsu19n1101087-game.local');
     
     cy.contains('プレイする').click();
     cy.contains('表示された数字または記号のキーを押してください').should('exist');
@@ -35,7 +35,7 @@ describe('E2Eテスト', () => {
   });
 
   it('正解のキーを押すと正解数のカウントが増える', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://tetsu19n1101087-game.local');
 
     cy.contains('プレイする').click();
 
