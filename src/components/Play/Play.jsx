@@ -19,7 +19,7 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
 
   useEffect(() => {
    async function getRandomList() {
-     await axios.get('http://api.tetsu19n1101087-game.app')
+     await axios.get('http://api.tetsu19n1101087-game.local')
        .then((res) => {
          setTypingList(res.data);
        })
@@ -31,22 +31,6 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
    }
    getRandomList();
   }, [setStartTime]);
-
-  // useEffect(() => {
-  //   const characterList = "0123456789!\"#$%&'()-=^~¥|@`[]{};+:*,<>./\\?".split(
-  //     ""
-  //   );
-  //   let randomList = [];
-  //   for (let i = 0; i < 10; i++) {
-  //     const randomIndex = Math.floor(Math.random() * characterList.length);
-  //     const randomElement = characterList.splice(randomIndex, 1)[0];
-  //     randomList.push(randomElement);
-  //   }
-  //   setTypingList(randomList);
-
-  //   setStartTime(new Date());
-  // }, [setStartTime]);
-
 
   useEffect(() => {
     if (questionNumber === typingList.length) {

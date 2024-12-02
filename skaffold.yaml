@@ -16,5 +16,3 @@ manifests:
     - k8s/deployment.yaml
     - k8s/ingress.yaml
     - k8s/service.yaml
-    - api-server/k8s/deployment.yaml
-    - api-server/k8s/service.yaml

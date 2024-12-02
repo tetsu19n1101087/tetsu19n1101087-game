@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: tetsu19n1101087-game-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: react
@@ -15,6 +15,27 @@ spec:
       containers:
         - name: game
           image: game:1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tetsu19n1101087-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express
+  template:
+    metadata:
+      labels:
+        app: express
+    spec:
+      containers:
+        - name: game-api
+          image: game-api:1
           imagePullPolicy: Never
           ports:
-            - containerPort: 80
+            - containerPort: 5000

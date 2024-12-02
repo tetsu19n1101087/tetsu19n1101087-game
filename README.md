@@ -52,7 +52,7 @@ minikube service tetsu19n1101087-game-service --url
 ### host名で名前解決できるよう設定
 名前解決したいホスト名を、`/etc/hosts` に追記する。
 ```
-127.0.0.1 tetsu19n1101087-game.app
+127.0.0.1 tetsu19n1101087-game.local
 ```
 
 Minikube とホストマシンをトンネリング（別タブで行う）。
@@ -63,7 +63,7 @@ minikube tunnel
 
 ### host名でアプリにアクセスできることを確認
 ```
-curl tetsu19n1101087-game.app
+curl tetsu19n1101087-game.local
 ```
 <br>
 
