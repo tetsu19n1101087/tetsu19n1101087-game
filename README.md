@@ -61,11 +61,11 @@ minikube tunnel
 ```
 
 
-### host名でアプリにアクセスできることを確認
+host名でアプリにアクセスできることを確認
 ```
 curl tetsu19n1101087-game.local
 ```
-<br>
+または、ブラウザでアクセスする。
 
 ## Skaffold による環境構築
 Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
@@ -99,6 +99,35 @@ API サーバーを起動し、別タブから React アプリを起動する。
 ```
 yarn start
 ```
+
+### minikube上でAPIを動かす
+Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
+
+Docker イメージを作成。
+```
+docker build -t game-api:1 ./api-server/
+```
+
+マニフェストファイル（yaml）から Deployment, Service, Ingress を作成
+```
+kubectl apply -f k8s/
+```
+
+名前解決したいホスト名を、`/etc/hosts` に追記する。
+```
+127.0.0.1 api.tetsu19n1101087-game.local
+```
+
+Minikube とホストマシンをトンネリング（別タブで行う）。
+```
+minikube tunnel
+```
+
+host名でアプリにアクセスできることを確認。
+```
+curl tetsu19n1101087-game.local
+```
+または、ブラウザでアクセスする。
 
 ## テスト
 ```
