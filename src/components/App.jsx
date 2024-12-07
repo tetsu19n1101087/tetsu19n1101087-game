@@ -43,7 +43,7 @@ function App() {
       contents = (
         <Result
           setStatus={setStatus}
-          time={((endTime - startTime) / 1000).toFixed(2)}
+          time={((endTime - startTime) / 1000)}
           missTypingNumber={missTypingNumber}
         />
       );

@@ -108,7 +108,7 @@ Docker イメージを作成。
 docker build -t game-api:1 ./api-server/
 ```
 
-マニフェストファイル（yaml）から Deployment, Service, Ingress を作成
+マニフェストファイル（yaml）から Deployment, Service, Ingress を作成。
 ```
 kubectl apply -f k8s/
 ```
@@ -123,11 +123,47 @@ Minikube とホストマシンをトンネリング（別タブで行う）。
 minikube tunnel
 ```
 
-host名でアプリにアクセスできることを確認。
+host名でAPIにアクセスできることを確認。
 ```
-curl tetsu19n1101087-game.local
+curl api.tetsu19n1101087-game.local/generate
 ```
 または、ブラウザでアクセスする。
+
+## PostgreSQL
+Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
+
+Kubegres operator をインストール。
+```
+kubectl apply -f https://raw.githubusercontent.com/reactive-tech/kubegres/v1.18/kubegres.yaml
+```
+
+マニフェストファイル（yaml）から PostgreSQL のクラスター, 認証情報の Secret, Ingress を作成。
+```
+kubectl apply -f k8s/
+```
+
+名前解決したいホスト名を、`/etc/hosts` に追記する。
+```
+127.0.0.1 api.tetsu19n1101087-game.local
+```
+
+Minikube とホストマシンをトンネリング（別タブで行う）。
+```
+minikube tunnel
+```
+
+host名でAPIにアクセスできることを確認。
+```
+curl api.tetsu19n1101087-game.local/results
+```
+または、ブラウザでアクセスする。
+
+### データベース API 機能一覧
+
+| 処理内容 | URL       | メソッド |
+|----------|-----------|----------|
+| 取得     | /results  | GET      |
+| 保存     | /results  | POST     |
 
 ## テスト
 ```

@@ -1,7 +1,8 @@
 FROM node:18
 WORKDIR /app
 ENV NODE_ENV=docker
-RUN yarn add express
+COPY package.json ./
+RUN yarn install --network-timeout 600000
 COPY . .
 CMD ["node", "app.js"]
 EXPOSE 5000

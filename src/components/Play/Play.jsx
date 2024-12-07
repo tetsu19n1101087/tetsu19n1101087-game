@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import Button from "../Button";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Button from '../Button';
+import axios from 'axios';
 
 function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [typingList, setTypingList] = useState([""]);
+  const [typingList, setTypingList] = useState(['loading...']);
 
   function handleKeyDown(e) {
     if (e.key === typingList[questionNumber]) {
       setQuestionNumber(questionNumber + 1);
-    } else if (["Shift", "Alt", "Meta", "Eisu", "KanjiMode"].includes(e.key)) {
+    } else if (['Shift', 'Alt', 'Meta', 'Eisu', 'KanjiMode'].includes(e.key)) {
       return;
     } else {
       handleMiss();
@@ -18,40 +18,43 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
   }
 
   useEffect(() => {
-   async function getRandomList() {
-     await axios.get('http://api.tetsu19n1101087-game.local')
-       .then((res) => {
-         setTypingList(res.data);
-       })
-       .catch((error) => {
-         console.log(error);
-         setTypingList(['error'])
-       });
-     await setStartTime(new Date());
-   }
-   getRandomList();
+    async function getRandomList() {
+      await axios
+        .get('http://api.tetsu19n1101087-game.local/generate')
+        .then((res) => {
+          setTypingList(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          setTypingList(['error']);
+        });
+      await setStartTime(new Date());
+    }
+    getRandomList();
   }, [setStartTime]);
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
       setEndTime(new Date());
-      setStatus("result");
+      setStatus('result');
     }
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   });
 
   return (
     <div>
       <h3>表示された数字または記号のキーを押してください</h3>
-      <Character data-testid="character">{typingList[questionNumber]}</Character>
+      <Character data-testid='character'>
+        {typingList[questionNumber]}
+      </Character>
       <Flex>
         <span>問題数: 10</span>
         <span>正解数: {questionNumber}</span>
-        <Button onClick={() => setStatus("top")}>タイトルに戻る</Button>
+        <Button onClick={() => setStatus('top')}>タイトルに戻る</Button>
       </Flex>
     </div>
   );
