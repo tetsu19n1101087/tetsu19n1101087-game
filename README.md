@@ -89,6 +89,8 @@ skaffold dev
 ソースコードに変更があった場合は、自動でビルド・デプロイを行なってくれる。  
 同様に、host名でアプリにアクセスできることを確認する。
 
+以下の環境構築も、全て行ってくれるため、`skaffold dev` を使う場合は、以下は不要。
+
 ## API の構築
 
 ### API の起動
@@ -130,7 +132,7 @@ curl api.tetsu19n1101087-game.local/generate
 または、ブラウザでアクセスする。
 
 ## PostgreSQL
-Minikube を起動し、`eval $(minikube docker-env)` で Docker に接続するところまでは同じ。
+API 構築の、`docker build -t game-api:1 ./api-server/` で Docker イメージを作成するところまでは同じ。
 
 Kubegres operator をインストール。
 ```
@@ -164,6 +166,16 @@ curl api.tetsu19n1101087-game.local/results
 |----------|-----------|----------|
 | 取得     | /results  | GET      |
 | 保存     | /results  | POST     |
+
+## MongoDB
+API 構築の、`docker build -t game-api:1 ./api-server/` で Docker イメージを作成するところまでは同じ。
+
+マニフェストファイル（yaml）から MongoDB の StatefulSet, Service を作成。
+```
+kubectl apply -f k8s/
+```
+
+その後の手順や、データベース API 機能は、PostgreSQL と同様。
 
 ## テスト
 ```
