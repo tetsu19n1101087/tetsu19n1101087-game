@@ -1,47 +1,22 @@
-const {Sequelize, DataTypes} = require('sequelize');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const sequelize = new Sequelize(
-  'postgres://postgres:postgresSuperUserPsw@mypostgres:5432/postgres'
-);
+mongoose.connect('mongodb://127.0.0.1:27017/test').then(() => {
+  console.log('mongoose successfully connects')
+})
+.catch(err => console.log(err));
 
-// sequelize.authenticate()
-//   .then(() => {
-//     console.log('Database connection has been established successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:', err);
-//   });
-
-const Result = sequelize.define(
-  'Result',
+const ResultSchema = new Schema(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    time: {
-      type: DataTypes.DOUBLE
-    },
-    correctTypingNumber: {
-      type: DataTypes.INTEGER
-    },
-    average: {
-      type: DataTypes.DOUBLE
-    },
-    missTypingNumber: {
-      type: DataTypes.INTEGER
-    },
-    accuracy: {
-      type: DataTypes.DOUBLE
-    }
+    time: Number,
+    correctTypingNumber: Number,
+    average: Number,
+    missTypingNumber: Number,
+    accuracy: Number,
   },
-  {
-    freezeTableName: true,
-    timestamps: true
-  }
+  { timestamps: true }
 );
 
-Result.sync({ alter: true });
+const Result = mongoose.model('Result', ResultSchema);
 
 module.exports = Result;

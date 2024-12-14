@@ -25,5 +25,5 @@ yarn-error.log*
 /cypress/screenshots
 
 skaffold
-
+minikube-darwin-arm64
 test.http
