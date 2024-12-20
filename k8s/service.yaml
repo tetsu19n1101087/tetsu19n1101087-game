@@ -29,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tetsu19n1101087-db-service
+  name: mongodb-service
   labels:
     app: mongo
 spec:

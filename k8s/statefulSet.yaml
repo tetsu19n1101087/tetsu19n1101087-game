@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: tetsu19n1101087-db
+  name: mongodb
 spec:
-  serviceName: tetsu19n1101087-db-service
+  serviceName: mongodb-service
   replicas: 3
   selector:
     matchLabels:
@@ -16,6 +16,11 @@ spec:
       containers:
       - name: mongodb
         image: mongo:latest
+        command:
+          - mongod
+          - --replSet
+          - rs0
+          - --bind_ip_all
         ports:
           - containerPort: 27017
         volumeMounts:
