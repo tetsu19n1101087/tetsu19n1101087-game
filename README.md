@@ -89,7 +89,9 @@ skaffold dev
 ソースコードに変更があった場合は、自動でビルド・デプロイを行なってくれる。  
 同様に、host名でアプリにアクセスできることを確認する。
 
-以下の環境構築も、全て行ってくれるため、`skaffold dev` を使う場合は、以下は不要。
+以下の環境構築も、全て行ってくれるため、`skaffold dev` を使う場合は、以下は不要
+（MongoDB の **[レプリカセットの初期化](#レプリカセットの初期化)** のみ、skaffold を使う場合でも行う必要がある）
+。
 
 ## API の構築
 
@@ -161,7 +163,6 @@ curl api.tetsu19n1101087-game.local/results
 または、ブラウザでアクセスする。
 
 ### データベース API 機能一覧
-
 | 処理内容 | URL       | メソッド |
 |----------|-----------|----------|
 | 取得     | /results  | GET      |
@@ -173,6 +174,30 @@ API 構築の、`docker build -t game-api:1 ./api-server/` で Docker イメー�
 マニフェストファイル（yaml）から MongoDB の StatefulSet, Service を作成。
 ```
 kubectl apply -f k8s/
+```
+
+### レプリカセットの初期化
+実行中の MongoDB コンテナに入る。
+```
+kubectl exec -it mongodb-0 -c mongodb -- mongosh
+```
+
+```js
+// "game"データベースに変更
+use game
+
+// レプリカセットの初期化
+rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "mongodb-0.mongodb-service.default.svc.cluster.local:27017", priority: 2 },
+    { _id: 1, host: "mongodb-1.mongodb-service.default.svc.cluster.local:27017", priority: 1 },
+    { _id: 2, host: "mongodb-2.mongodb-service.default.svc.cluster.local:27017", priority: 1 }
+  ]
+});
+
+// ユーザーの作成（primary で行う）
+db.createUser({ user: "app_user", pwd: "app_password", roles: [{ role: "readWrite", db: "game" }] });
 ```
 
 その後の手順や、データベース API 機能は、PostgreSQL と同様。
