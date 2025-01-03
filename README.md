@@ -182,6 +182,7 @@ kubectl apply -f k8s/
 kubectl exec -it mongodb-0 -c mongodb -- mongosh
 ```
 
+mongosh で、レプリカセットの初期化とユーザーの作成を行う。
 ```js
 // "game"データベースに変更
 use game
