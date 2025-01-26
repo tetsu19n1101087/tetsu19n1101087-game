@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Result from './Result';
+import Result from '../components/Result/Result';
 
 describe('Result Component', () => {
   test('テキストが描画されている', () => {

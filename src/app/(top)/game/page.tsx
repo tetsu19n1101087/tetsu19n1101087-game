@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/Button';
 import axios from 'axios';
 
-function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
+export default function Page() {
+  const router = useRouter();
+
   const [questionNumber, setQuestionNumber] = useState(0);
   const [typingList, setTypingList] = useState(['loading...']);
+
+  const startTime = useRef(Date.now());
+  const missTypingNumber = useRef(0);
 
   function handleKeyDown(e) {
     if (e.key === typingList[questionNumber]) {
@@ -13,30 +21,34 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
     } else if (['Shift', 'Alt', 'Meta', 'Eisu', 'KanjiMode'].includes(e.key)) {
       return;
     } else {
-      handleMiss();
+      missTypingNumber.current += 1;
     }
   }
 
   useEffect(() => {
     async function getRandomList() {
       await axios
-        .get('http://api.tetsu19n1101087-game.local/generate')
+        .get('/api/generate')
         .then((res) => {
-          setTypingList(res.data);
+          setTypingList(res.data.typingList);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
           setTypingList(['error']);
         });
-      await setStartTime(new Date());
     }
     getRandomList();
-  }, [setStartTime]);
+  }, []);
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
-      setEndTime(new Date());
-      setStatus('result');
+      const paramsObj = {
+        time: ((Date.now() - startTime.current) / 1000).toString(),
+        miss: missTypingNumber.current.toString(),
+      };
+      const params = new URLSearchParams(paramsObj);
+
+      router.push(`/result?${params.toString()}`);
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -54,7 +66,7 @@ function Play({ setStatus, handleMiss, setStartTime, setEndTime }) {
       <Flex>
         <span>問題数: 10</span>
         <span>正解数: {questionNumber}</span>
-        <Button onClick={() => setStatus('top')}>タイトルに戻る</Button>
+        <Button onClick={() => router.push('/')}>タイトルに戻る</Button>
       </Flex>
     </div>
   );
@@ -70,5 +82,3 @@ const Flex = styled.div`
   justify-content: space-around;
   align-items: center;
 `;
-
-export default Play;

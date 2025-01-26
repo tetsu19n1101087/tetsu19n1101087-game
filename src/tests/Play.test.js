@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Play from './Play';
+import Play from '../components/Play/Play';
 
 async function waitForCharacter() {
   await waitFor(() => {

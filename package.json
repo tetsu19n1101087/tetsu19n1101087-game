@@ -13,10 +13,11 @@
     "firebase-tools": "^13.3.0",
     "mongodb": "6.11",
     "mongoose": "^8.8.4",
+    "next": "^15.1.6",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "sequelize": "^6.37.5",
     "styled-components": "^6.1.0",
@@ -24,10 +25,11 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
@@ -53,10 +55,13 @@
     "@babel/core": "^7.24.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.24.0",
+    "@types/react": "^19.0.8",
+    "@types/styled-components": "^5.1.34",
     "babel-jest": "^29.7.0",
     "cypress": "^13.16.0",
     "msw": "^1.2.3",
-    "prettier": "3.2.5"
+    "prettier": "3.2.5",
+    "typescript": "^5.7.3"
   },
   "packageManager": "yarn@4.1.1",
   "jest": {

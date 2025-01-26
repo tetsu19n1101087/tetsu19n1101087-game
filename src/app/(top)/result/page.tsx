@@ -1,10 +1,27 @@
-import { useState, useEffect } from "react";
+'use client';
+
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Button from '@/components/Button';
 import axios from 'axios';
 
-function Result({setStatus, time, missTypingNumber}) {
-  const [lastResult, setLastResult] = useState({});
+type Result = {
+  time?: number;
+  correctTypingNumber?: number;
+  average?: number;
+  missTypingNumber?: number;
+  accuracy?: number;
+}
+
+export default function Page() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [lastResult, setLastResult] = useState<Result>({});
+
+  const time = Number(searchParams.get('time'));
+  const missTypingNumber = Number(searchParams.get('miss'));
 
   const correctTypingNumber = 10;
   const average = ((10 + missTypingNumber) / time);
@@ -13,22 +30,22 @@ function Result({setStatus, time, missTypingNumber}) {
   useEffect(() => {
     async function getResult() {
       await axios
-        .get('http://api.tetsu19n1101087-game.local/results')
+        .get('/api/results')
         .then((res) => {
-          setLastResult(res.data);
+          setLastResult(res.data.lastResult);
         })
         .catch((error) => {
           console.log(error);
         });
       
-      await axios.post('http://api.tetsu19n1101087-game.local/results', {
+      await axios.post('/api/results', {
         time,
         correctTypingNumber,
         average,
         missTypingNumber,
         accuracy,
       }).then((res) => {
-        console.log(res.data);
+        console.log(res.data.message);
       })
       .catch((error) => {
         console.log(error);
@@ -54,9 +71,7 @@ function Result({setStatus, time, missTypingNumber}) {
           </tr>
           <tr>
             <TableHeader>平均キータイプ数</TableHeader>
-            <TableData>
-              {average.toFixed(1)} 回/秒
-            </TableData>
+            <TableData>{average.toFixed(1)} 回/秒</TableData>
             <TableData>
               ({typeof lastResult.average === 'number' ? lastResult.average.toFixed(1) : '-'} 回/秒)
             </TableData>
@@ -68,16 +83,14 @@ function Result({setStatus, time, missTypingNumber}) {
           </tr>
           <tr>
             <TableHeader>正確率</TableHeader>
-            <TableData>
-              {accuracy.toFixed(2)} %
-            </TableData>
+            <TableData>{accuracy.toFixed(2)} %</TableData>
             <TableData>
               ({typeof lastResult.accuracy === 'number' ? lastResult.accuracy.toFixed(2) : '-'} %)
             </TableData>
           </tr>
         </tbody>
       </Table>
-      <Button onClick={() => setStatus('top')}>タイトルに戻る</Button>
+      <Button onClick={() => router.push('/')}>タイトルに戻る</Button>
     </div>
   );
 }
@@ -100,5 +113,3 @@ const TableData = styled.td`
   color: #0fd994;
   width: 120px;
 `;
-
-export default Result;

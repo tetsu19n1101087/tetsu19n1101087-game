@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Top from './Top';
+import Top from '../components/Top/Top';
 
 describe('Top Component', () => {
   test('テキストが描画されている', () => {
