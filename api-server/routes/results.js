@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     })
     .catch((err) => {
       console.error('Error creating document:', err);
-    })
+    });
 });
 
 router.get('/', async (req, res) => {
@@ -24,15 +24,16 @@ router.get('/', async (req, res) => {
     await connectDatabase();
   }
 
-  await Result.findOne()
+  await Result.find()
     .sort({ createdAt: -1 })
+    .limit(2)
     .then((result) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.send(result);
     })
     .catch((err) => {
       console.error('Error finding document:', err);
-    })
+    });
 });
 
 async function connectDatabase() {
@@ -41,11 +42,9 @@ async function connectDatabase() {
       ? 'mongodb://app_user:app_password@mongodb-0.mongodb-service.default.svc.cluster.local,mongodb-1.mongodb-service.default.svc.cluster.local,mongodb-2.mongodb-service.default.svc.cluster.local:27017/game?replicaSet=rs0'
       : 'mongodb://localhost:27017';
 
-  await mongoose
-    .connect(url)
-    .catch((err) => {
-      console.log(err);
-    });
+  await mongoose.connect(url).catch((err) => {
+    console.log(err);
+  });
 }
 
 module.exports = router;

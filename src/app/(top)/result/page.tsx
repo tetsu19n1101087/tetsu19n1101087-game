@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import axios from 'axios';
 
@@ -16,43 +16,22 @@ type Result = {
 
 export default function Page() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const [lastResult, setLastResult] = useState<Result>({});
-
-  const time = Number(searchParams.get('time'));
-  const missTypingNumber = Number(searchParams.get('miss'));
-
-  const correctTypingNumber = 10;
-  const average = ((10 + missTypingNumber) / time);
-  const accuracy = ((10 / (10 + missTypingNumber)) * 100);
+  const [results, setResults] = useState<Result[]>([{}, {}]);
 
   useEffect(() => {
     async function getResult() {
       await axios
         .get('/api/results')
         .then((res) => {
-          setLastResult(res.data.lastResult);
+          setResults(res.data.results);
         })
         .catch((error) => {
           console.log(error);
         });
-      
-      await axios.post('/api/results', {
-        time,
-        correctTypingNumber,
-        average,
-        missTypingNumber,
-        accuracy,
-      }).then((res) => {
-        console.log(res.data.message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     }
     getResult();
-  },[time, missTypingNumber, accuracy, average]);
+  },[]);
 
   return (
     <div>
@@ -61,31 +40,31 @@ export default function Page() {
         <tbody>
           <tr>
             <TableHeader>経過時間</TableHeader>
-            <TableData>{time.toFixed(2)}</TableData>
-            <TableData>({typeof lastResult.time === 'number' ? lastResult.time.toFixed(2) : '-'})</TableData>
+            <TableData>{typeof results[0].time === 'number' ? results[0].time.toFixed(2) : '-'}</TableData>
+            <TableData>({typeof results[1].time === 'number' ? results[1].time.toFixed(2) : '-'})</TableData>
           </tr>
           <tr>
             <TableHeader>正しく打ったキーの数</TableHeader>
-            <TableData>{correctTypingNumber}</TableData>
-            <TableData>({lastResult.correctTypingNumber || '-'})</TableData>
+            <TableData>{results[0].correctTypingNumber || '-'}</TableData>
+            <TableData>({results[1].correctTypingNumber || '-'})</TableData>
           </tr>
           <tr>
             <TableHeader>平均キータイプ数</TableHeader>
-            <TableData>{average.toFixed(1)} 回/秒</TableData>
+            <TableData>{typeof results[0].average === 'number' ? results[0].average.toFixed(1) : '-'} 回/秒</TableData>
             <TableData>
-              ({typeof lastResult.average === 'number' ? lastResult.average.toFixed(1) : '-'} 回/秒)
+              ({typeof results[1].average === 'number' ? results[1].average.toFixed(1) : '-'} 回/秒)
             </TableData>
           </tr>
           <tr>
             <TableHeader>ミスタイプ数</TableHeader>
-            <TableData>{missTypingNumber}</TableData>
-            <TableData>({typeof lastResult.missTypingNumber === 'number' ? lastResult.missTypingNumber : '-'})</TableData>
+            <TableData>{typeof results[0].missTypingNumber === 'number' ? results[0].missTypingNumber : '-'}</TableData>
+            <TableData>({typeof results[1].missTypingNumber === 'number' ? results[1].missTypingNumber : '-'})</TableData>
           </tr>
           <tr>
             <TableHeader>正確率</TableHeader>
-            <TableData>{accuracy.toFixed(2)} %</TableData>
+            <TableData>{typeof results[0].accuracy === 'number' ? results[0].accuracy.toFixed(2) : '-'} %</TableData>
             <TableData>
-              ({typeof lastResult.accuracy === 'number' ? lastResult.accuracy.toFixed(2) : '-'} %)
+              ({typeof results[1].accuracy === 'number' ? results[1].accuracy.toFixed(2) : '-'} %)
             </TableData>
           </tr>
         </tbody>

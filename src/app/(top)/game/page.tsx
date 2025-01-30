@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import axios from 'axios';
+import { createResult } from '@/lib/action';
 
 export default function Page() {
   const router = useRouter();
@@ -14,6 +15,10 @@ export default function Page() {
 
   const startTime = useRef(Date.now());
   const missTypingNumber = useRef(0);
+
+  const formRef = useRef(null);
+  const inputTimeRef = useRef(null);
+  const inputMissRef = useRef(null);
 
   function handleKeyDown(e) {
     if (e.key === typingList[questionNumber]) {
@@ -42,13 +47,16 @@ export default function Page() {
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
-      const paramsObj = {
-        time: ((Date.now() - startTime.current) / 1000).toString(),
-        miss: missTypingNumber.current.toString(),
-      };
-      const params = new URLSearchParams(paramsObj);
+      // const paramsObj = {
+      //   time: ((Date.now() - startTime.current) / 1000).toString(),
+      //   miss: missTypingNumber.current.toString(),
+      // };
+      // const params = new URLSearchParams(paramsObj);
+      // router.push(`/result?${params.toString()}`);
 
-      router.push(`/result?${params.toString()}`);
+      inputTimeRef.current.value = ((Date.now() - startTime.current) / 1000);
+      inputMissRef.current.value = missTypingNumber.current;
+      formRef.current.requestSubmit();
     }
 
     document.addEventListener('keydown', handleKeyDown);
@@ -68,6 +76,10 @@ export default function Page() {
         <span>正解数: {questionNumber}</span>
         <Button onClick={() => router.push('/')}>タイトルに戻る</Button>
       </Flex>
+      <form ref={formRef} action={createResult}>
+        <input ref={inputTimeRef} type="hidden" name="time" />
+        <input ref={inputMissRef} type="hidden" name="miss" />
+      </form>
     </div>
   );
 }
