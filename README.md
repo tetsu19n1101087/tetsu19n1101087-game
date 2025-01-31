@@ -101,7 +101,7 @@ node api-server/app.js
 ```
 API サーバーを起動し、別タブから React アプリを起動する。
 ```
-yarn start
+yarn dev
 ```
 
 ### minikube上でAPIを動かす
