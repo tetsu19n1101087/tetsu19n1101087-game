@@ -18,6 +18,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
+          env:
+          - name: API_DOMAIN
+            value: "http://tetsu19n1101087-api-service:5000"
 ---
 apiVersion: apps/v1
 kind: Deployment

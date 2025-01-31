@@ -4,6 +4,7 @@ import { z } from 'zod';
 import axios from 'axios';
 import { redirect } from 'next/navigation';
 import { revalidateTag } from 'next/cache';
+import { API_DOMAIN } from '@/config';
 
 const ResultSchema = z.object({
   time: z.coerce.number(),
@@ -25,20 +26,17 @@ export async function createResult(formData: FormData) {
   const average = (10 + missTypingNumber) / time;
   const accuracy = (10 / (10 + missTypingNumber)) * 100;
 
-  await axios
-    .post('http://localhost:3001/results', {
+  try {
+    await axios.post(`${API_DOMAIN}/results`, {
       time,
       correctTypingNumber,
       average,
       missTypingNumber,
       accuracy,
-    })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.log(error);
     });
+  } catch (error) {
+    console.error(error);
+  }
 
   revalidateTag('results');
   redirect('/result');

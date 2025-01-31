@@ -47,13 +47,6 @@ export default function Page() {
 
   useEffect(() => {
     if (questionNumber === typingList.length) {
-      // const paramsObj = {
-      //   time: ((Date.now() - startTime.current) / 1000).toString(),
-      //   miss: missTypingNumber.current.toString(),
-      // };
-      // const params = new URLSearchParams(paramsObj);
-      // router.push(`/result?${params.toString()}`);
-
       inputTimeRef.current.value = ((Date.now() - startTime.current) / 1000);
       inputMissRef.current.value = missTypingNumber.current;
       formRef.current.requestSubmit();
@@ -69,7 +62,7 @@ export default function Page() {
     <div>
       <h3>表示された数字または記号のキーを押してください</h3>
       <Character data-testid='character'>
-        {typingList[questionNumber]}
+        {typingList[questionNumber] || 'saving...'}
       </Character>
       <Flex>
         <span>問題数: 10</span>
