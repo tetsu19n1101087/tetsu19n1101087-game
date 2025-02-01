@@ -99,7 +99,7 @@ skaffold dev
 ```
 node api-server/app.js
 ```
-API サーバーを起動し、別タブから React アプリを起動する。
+API サーバーを起動し、別タブから Next.js アプリを起動する。
 ```
 yarn dev
 ```
