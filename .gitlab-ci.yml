@@ -47,5 +47,7 @@ deploy:
     refs:
     - main
   script:
+    - echo -n $FIREBASE_SERVICE_ACCOUNT_KEY | base64 -d > token.json
+    - export GOOGLE_APPLICATION_CREDENTIALS="token.json"
     - yarn build
     - yarn run firebase deploy --token $FIREBASE_TOKEN
