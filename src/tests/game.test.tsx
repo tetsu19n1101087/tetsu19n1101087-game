@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import Page from '@/app/(top)/game/page';
 import axios from 'axios';
 import { createResult } from '@/lib/action';
+import { useRouter } from 'next/navigation';
 
 // モジュールごとモック
 jest.mock('axios');
@@ -125,5 +126,19 @@ describe('Game Page', () => {
     await waitFor(() => {
       expect(mockAction).toHaveBeenCalled();
     });
+  });
+
+  test('ボタンをクリックすると関数が呼ばれる', async () => {
+    const user = userEvent.setup();
+
+    const mockPush = jest.fn();
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+
+    render(<Page />);
+
+    const button = screen.getByRole('button', { name: 'タイトルに戻る' });
+
+    await user.click(button);
+    expect(mockPush).toHaveBeenCalled();
   });
 });
