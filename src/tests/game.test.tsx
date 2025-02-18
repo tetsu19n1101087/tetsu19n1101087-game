@@ -16,14 +16,6 @@ jest.mock('@/lib/action', () => {
   };
 });
 
-async function waitForCharacter() {
-  await waitFor(() => {
-    const character = screen.getByTestId('character');
-    expect(character).toHaveTextContent(
-      /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/
-    );
-  });
-}
 const mockData = {
   typingList: [':', '/', '}', '3', '<', ')', '!', '=', ';', ','],
 };
@@ -33,17 +25,15 @@ describe('Game Page', () => {
   test('テキストが描画されている', async () => {
     render(<Page />);
 
-    await waitForCharacter();
+    const character = await screen.findByTestId('character');
+    expect(character).toHaveTextContent(
+      /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/
+    );
 
     const header = screen.getByText(
       '表示された数字または記号のキーを押してください'
     );
     expect(header).toBeInTheDocument();
-
-    const character = screen.getByTestId('character');
-    expect(character).toHaveTextContent(
-      /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/
-    );
 
     const howMany = screen.getByText('問題数: 10');
     expect(howMany).toBeInTheDocument();
@@ -59,8 +49,6 @@ describe('Game Page', () => {
     const user = userEvent.setup();
 
     render(<Page />);
-
-    await waitForCharacter();
 
     const key = await screen.findByTestId('character', undefined, {
       timeout: 5000,
@@ -81,7 +69,9 @@ describe('Game Page', () => {
 
     render(<Page />);
 
-    await waitForCharacter();
+    expect(await screen.findByTestId('character')).toHaveTextContent(
+      /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/
+    );
 
     expect(screen.getByText(/正解数:/)).toHaveTextContent('正解数: 0');
 
@@ -96,7 +86,9 @@ describe('Game Page', () => {
     } else {
       await user.keyboard(character);
     }
-    expect(screen.getByText(/正解数:/)).toHaveTextContent('正解数: 1');
+
+    const correctAnswer = await screen.findByText(/正解数:/);
+    expect(correctAnswer).toHaveTextContent('正解数: 1');
   });
 
   test('全問題が終了したらフォームが送信される', async () => {
@@ -107,7 +99,9 @@ describe('Game Page', () => {
 
     render(<Page />);
 
-    await waitForCharacter();
+    expect(await screen.findByTestId('character')).toHaveTextContent(
+      /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/
+    );
 
     for (let i = 0; i < 10; i++) {
       const key = await screen.findByTestId('character', undefined, {
