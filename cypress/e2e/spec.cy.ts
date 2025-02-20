@@ -1,6 +1,6 @@
 describe('E2Eテスト', () => {
   it('ゲームがクリアでき、その後タイトルに戻ることができる', () => {
-    cy.visit('http://tetsu19n1101087-game.local');
+    cy.visit('http://localhost:3000/');
 
     cy.contains('数字・記号専用のタイピング練習ゲーム').should('exist');
     
@@ -8,7 +8,7 @@ describe('E2Eテスト', () => {
 
     cy.wait(1000);
 
-    cy.get('[data-testid="character"]').invoke('text').should('match', /[0123456789!"#\$%&'()\-=^~¥|@`\[\]{};\+:\*,<>\.\/\\\?]/)
+    cy.get('[data-testid="character"]').invoke('text').should('match', /[0123456789!"#$%&'()\-=^~¥|@`[\]{};+:*,<>./\\?]/)
 
     for (let i = 0; i < 10; i++) {
       cy.get('[data-testid="character"]').invoke('text').then((key) => {
@@ -18,14 +18,14 @@ describe('E2Eテスト', () => {
 
     cy.contains('結果').should('exist');
     cy.get('th').should('have.length', 5);
-    cy.get('td').should('have.length', 5);
+    cy.get('td').should('have.length', 10);
 
     cy.contains('タイトルに戻る').click();
     cy.contains('数字・記号専用のタイピング練習ゲーム').should('exist');
   });
 
   it('プレイ画面からタイトル画面に遷移する', () => {
-    cy.visit('http://tetsu19n1101087-game.local');
+    cy.visit('http://localhost:3000/');
     
     cy.contains('プレイする').click();
     cy.contains('表示された数字または記号のキーを押してください').should('exist');
@@ -35,7 +35,7 @@ describe('E2Eテスト', () => {
   });
 
   it('正解のキーを押すと正解数のカウントが増える', () => {
-    cy.visit('http://tetsu19n1101087-game.local');
+    cy.visit('http://localhost:3000/');
 
     cy.contains('プレイする').click();
 
