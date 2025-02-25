@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Page from '@/app/(top)/result/page';
+import Page from '@/app/result/page';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 

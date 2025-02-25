@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import { Suspense } from 'react';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
       <Header>

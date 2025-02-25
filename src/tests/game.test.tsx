@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Page from '@/app/(top)/game/page';
+import Page from '@/app/game/page';
 import axios from 'axios';
 import { createResult } from '@/lib/action';
 import { useRouter } from 'next/navigation';

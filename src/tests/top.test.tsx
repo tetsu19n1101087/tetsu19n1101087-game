@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Page from '@/app/(top)/page';
+import Page from '@/app/page';
 import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation');
@@ -23,7 +23,7 @@ describe('Top Page', () => {
     const user = userEvent.setup();
 
     const mockPush = jest.fn();
-    (useRouter as jest.Mock).mockReturnValue({ push: mockPush })
+    (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
 
     render(<Page />);
 
