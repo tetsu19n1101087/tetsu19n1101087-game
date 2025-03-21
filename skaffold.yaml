@@ -3,6 +3,9 @@ kind: Config
 metadata:
   name: tetsu-n--game
 build:
+  tagPolicy:
+    envTemplate:
+      template: "1"
   artifacts:
     - image: game
       docker:
@@ -14,7 +17,6 @@ build:
 manifests:
   rawYaml:
     - k8s/deployment.yaml
-    - k8s/ingress.yaml
     - k8s/service.yaml
-    - api-server/k8s/deployment.yaml
-    - api-server/k8s/service.yaml
+    - k8s/ingress.yaml
+    - k8s/statefulSet.yaml
