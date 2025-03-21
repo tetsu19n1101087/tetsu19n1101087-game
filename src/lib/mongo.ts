@@ -17,7 +17,9 @@ const ResultSchema = new Schema(
 export const Result = mongoose.models.Result || mongoose.model('Result', ResultSchema);
 
 export async function connectDatabase() {
-  await mongoose.connect(DB_URI).catch((err) => {
-    console.log(err);
-  });
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(DB_URI).catch((err) => {
+      console.log(err);
+    });
+  }
 }

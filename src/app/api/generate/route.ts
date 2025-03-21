@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { API_DOMAIN } from '@/config';
 
 export async function GET(request: NextRequest) {
-  try {
-    const res = await fetch(`${API_DOMAIN}/generate`).then((res) => {
-      return res.json();
-    });
-
-    return NextResponse.json({ typingList: res }, { status: 200 });
-  } catch (error) {
-    console.error('error: ', error);
-    return NextResponse.json({}, { status: 400 });
+  const characterList = '0123456789!"#$%&\'()-=^~¥|@`[]{};+:*,<>./\\?'.split(
+    ''
+  );
+  let typingList = [];
+  for (let i = 0; i < 10; i++) {
+    const randomIndex = Math.floor(Math.random() * characterList.length);
+    const randomElement = characterList.splice(randomIndex, 1)[0];
+    typingList.push(randomElement);
   }
+
+  return NextResponse.json({ typingList }, { status: 200 });
 }

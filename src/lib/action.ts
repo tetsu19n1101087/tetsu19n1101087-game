@@ -1,10 +1,9 @@
 'use server';
 
 import { z } from 'zod';
-import axios from 'axios';
 import { redirect } from 'next/navigation';
-import { revalidateTag } from 'next/cache';
-import { API_DOMAIN } from '@/config';
+import { revalidatePath } from 'next/cache';
+import { Result, connectDatabase } from './mongo';
 
 const ResultSchema = z.object({
   time: z.coerce.number(),
@@ -27,7 +26,9 @@ export async function createResult(formData: FormData) {
   const accuracy = (10 / (10 + missTypingNumber)) * 100;
 
   try {
-    await axios.post(`${API_DOMAIN}/results`, {
+    await connectDatabase();
+
+    await Result.create({
       time,
       correctTypingNumber,
       average,
@@ -38,6 +39,6 @@ export async function createResult(formData: FormData) {
     console.error(error);
   }
 
-  revalidateTag('results');
+  revalidatePath('/result');
   redirect('/result');
 }
