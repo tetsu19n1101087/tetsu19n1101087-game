@@ -42,11 +42,11 @@ export async function createResult(formData: FormData) {
 
     await Result.create({
       userId: session.userId,
-      time,
+      time: secondDecimal(time),
       correctTypingNumber,
-      average,
+      average: secondDecimal(average),
       missTypingNumber,
-      accuracy,
+      accuracy: secondDecimal(accuracy),
     });
   } catch (error) {
     console.error(error);
@@ -91,4 +91,8 @@ export async function logoutUser() {
 
   revalidatePath('/');
   redirect('/login');
+}
+
+function secondDecimal(num: number) {
+  return Math.round(num * 100) / 100;
 }

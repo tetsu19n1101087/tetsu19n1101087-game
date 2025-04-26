@@ -41,7 +41,7 @@ export default function Page() {
           <tr>
             <TableHeader>経過時間</TableHeader>
             <TableData>{results[0] ? results[0].time : '-'}</TableData>
-            <TableData>({results[1] ? results[0].time : '-'})</TableData>
+            <TableData>({results[1] ? results[1].time : '-'})</TableData>
           </tr>
           <tr>
             <TableHeader>正しく打ったキーの数</TableHeader>
@@ -49,7 +49,7 @@ export default function Page() {
               {results[0] ? results[0].correctTypingNumber : '-'}
             </TableData>
             <TableData>
-              ({results[1] ? results[0].correctTypingNumber : '-'})
+              ({results[1] ? results[1].correctTypingNumber : '-'})
             </TableData>
           </tr>
           <tr>
