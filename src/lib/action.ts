@@ -3,7 +3,9 @@
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { v4 as uuidV4 } from 'uuid';
 import { Result, connectDatabase } from './mongo';
+import { createSession, getSession } from './session';
 
 const ResultSchema = z.object({
   time: z.coerce.number(),
@@ -25,15 +27,23 @@ export async function createResult(formData: FormData) {
   const average = (10 + missTypingNumber) / time;
   const accuracy = (10 / (10 + missTypingNumber)) * 100;
 
+  let session = await getSession();
+
+  if (!session) {
+    await createSession(uuidV4());
+    session = await getSession();
+  }
+
   try {
     await connectDatabase();
 
     await Result.create({
-      time,
+      userId: session.userId,
+      time: secondDecimal(time),
       correctTypingNumber,
-      average,
+      average: secondDecimal(average),
       missTypingNumber,
-      accuracy,
+      accuracy: secondDecimal(accuracy),
     });
   } catch (error) {
     console.error(error);
@@ -41,4 +51,8 @@ export async function createResult(formData: FormData) {
 
   revalidatePath('/result');
   redirect('/result');
+}
+
+function secondDecimal(num: number) {
+  return Math.round(num * 100) / 100;
 }

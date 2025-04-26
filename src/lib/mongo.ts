@@ -5,6 +5,11 @@ const Schema = mongoose.Schema;
 
 const ResultSchema = new Schema(
   {
+    userId: {
+      type: String,
+      required: true,
+      index: true,
+    },
     time: Number,
     correctTypingNumber: Number,
     average: Number,
@@ -14,7 +19,8 @@ const ResultSchema = new Schema(
   { timestamps: true }
 );
 
-export const Result = mongoose.models.Result || mongoose.model('Result', ResultSchema);
+export const Result =
+  mongoose.models.Result || mongoose.model('Result', ResultSchema);
 
 export async function connectDatabase() {
   if (mongoose.connection.readyState === 0) {

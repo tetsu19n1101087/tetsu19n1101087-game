@@ -12,7 +12,7 @@ type Result = {
   average?: number;
   missTypingNumber?: number;
   accuracy?: number;
-}
+};
 
 export default function Page() {
   const router = useRouter();
@@ -27,11 +27,12 @@ export default function Page() {
           setResults(res.data.results);
         })
         .catch((error) => {
+          setResults([]);
           console.log(error);
         });
     }
     getResult();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -40,32 +41,38 @@ export default function Page() {
         <tbody>
           <tr>
             <TableHeader>経過時間</TableHeader>
-            <TableData>{typeof results[0].time === 'number' ? results[0].time.toFixed(2) : '-'}</TableData>
-            <TableData>({typeof results[1].time === 'number' ? results[1].time.toFixed(2) : '-'})</TableData>
+            <TableData>{results[0] ? results[0].time : '-'}</TableData>
+            <TableData>({results[1] ? results[1].time : '-'})</TableData>
           </tr>
           <tr>
             <TableHeader>正しく打ったキーの数</TableHeader>
-            <TableData>{results[0].correctTypingNumber || '-'}</TableData>
-            <TableData>({results[1].correctTypingNumber || '-'})</TableData>
+            <TableData>
+              {results[0] ? results[0].correctTypingNumber : '-'}
+            </TableData>
+            <TableData>
+              ({results[1] ? results[1].correctTypingNumber : '-'})
+            </TableData>
           </tr>
           <tr>
             <TableHeader>平均キータイプ数</TableHeader>
-            <TableData>{typeof results[0].average === 'number' ? results[0].average.toFixed(1) : '-'} 回/秒</TableData>
+            <TableData>{results[0] ? results[0].average : '-'} 回/秒</TableData>
             <TableData>
-              ({typeof results[1].average === 'number' ? results[1].average.toFixed(1) : '-'} 回/秒)
+              ({results[1] ? results[1].average : '-'} 回/秒)
             </TableData>
           </tr>
           <tr>
             <TableHeader>ミスタイプ数</TableHeader>
-            <TableData>{typeof results[0].missTypingNumber === 'number' ? results[0].missTypingNumber : '-'}</TableData>
-            <TableData>({typeof results[1].missTypingNumber === 'number' ? results[1].missTypingNumber : '-'})</TableData>
+            <TableData>
+              {results[0] ? results[0].missTypingNumber : '-'}
+            </TableData>
+            <TableData>
+              ({results[1] ? results[1].missTypingNumber : '-'})
+            </TableData>
           </tr>
           <tr>
             <TableHeader>正確率</TableHeader>
-            <TableData>{typeof results[0].accuracy === 'number' ? results[0].accuracy.toFixed(2) : '-'} %</TableData>
-            <TableData>
-              ({typeof results[1].accuracy === 'number' ? results[1].accuracy.toFixed(2) : '-'} %)
-            </TableData>
+            <TableData>{results[0] ? results[0].accuracy : '-'} %</TableData>
+            <TableData>({results[1] ? results[1].accuracy : '-'} %)</TableData>
           </tr>
         </tbody>
       </Table>

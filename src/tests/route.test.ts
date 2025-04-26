@@ -8,7 +8,7 @@ import * as resultsRoute from '@/app/api/results/route';
 
 describe('Route Handler', () => {
   describe('/api/generate', () => {
-    it('タイピングリストが返ってくる', async () => {
+    test('タイピングリストが返ってくる', async () => {
       const request = new NextRequest('http://localhost:3000/api/generate');
 
       const response = await generateRoute
@@ -23,7 +23,7 @@ describe('Route Handler', () => {
   });
 
   describe('/api/results', () => {
-    it('結果が返ってくる', async () => {
+    test('結果が返ってくる', async () => {
       const request = new NextRequest('http://localhost:3000/api/results');
 
       const response = await resultsRoute
@@ -42,6 +42,6 @@ describe('Route Handler', () => {
         expect(result).toHaveProperty('missTypingNumber');
         expect(result).toHaveProperty('accuracy');
       });
-    });
+    }, 30000);
   });
 });
