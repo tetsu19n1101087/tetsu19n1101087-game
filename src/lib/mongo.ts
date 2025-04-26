@@ -3,17 +3,6 @@ import { DB_URI } from '@/config';
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
-  { timestamps: true }
-);
-
 const ResultSchema = new Schema(
   {
     userId: {
@@ -30,7 +19,6 @@ const ResultSchema = new Schema(
   { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Result =
   mongoose.models.Result || mongoose.model('Result', ResultSchema);
 

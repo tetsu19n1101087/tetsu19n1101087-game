@@ -3,8 +3,8 @@
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { Result, User, connectDatabase } from './mongo';
-import { cookies } from 'next/headers';
+import { v4 as uuidV4 } from 'uuid';
+import { Result, connectDatabase } from './mongo';
 import { createSession, getSession } from './session';
 
 const ResultSchema = z.object({
@@ -17,10 +17,6 @@ const ResultSchema = z.object({
 
 const CreateResult = ResultSchema.pick({ time: true, missTypingNumber: true });
 
-const UserSchema = z.object({
-  username: z.string().min(3).max(20),
-});
-
 export async function createResult(formData: FormData) {
   const { time, missTypingNumber } = CreateResult.parse({
     time: formData.get('time'),
@@ -31,10 +27,11 @@ export async function createResult(formData: FormData) {
   const average = (10 + missTypingNumber) / time;
   const accuracy = (10 / (10 + missTypingNumber)) * 100;
 
-  const session = await getSession();
+  let session = await getSession();
 
   if (!session) {
-    redirect('/login');
+    await createSession(uuidV4());
+    session = await getSession();
   }
 
   try {
@@ -54,43 +51,6 @@ export async function createResult(formData: FormData) {
 
   revalidatePath('/result');
   redirect('/result');
-}
-
-export async function loginUser(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  const { username } = UserSchema.parse({
-    username: formData.get('username'),
-  });
-
-  try {
-    await connectDatabase();
-
-    // Find user or create if doesn't exist
-    let user = await User.findOne({ username });
-
-    if (!user) {
-      user = await User.create({ username });
-    }
-
-    // Create session
-    await createSession(user._id.toString(), username);
-  } catch (error) {
-    console.error('Login error:', error);
-    return 'Failed to login';
-  }
-
-  revalidatePath('/');
-  redirect('/');
-}
-
-export async function logoutUser() {
-  const cookieStore = await cookies();
-  cookieStore.delete('session');
-
-  revalidatePath('/');
-  redirect('/login');
 }
 
 function secondDecimal(num: number) {

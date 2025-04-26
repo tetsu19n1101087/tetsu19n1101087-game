@@ -27,6 +27,7 @@ export default function Page() {
           setResults(res.data.results);
         })
         .catch((error) => {
+          setResults([]);
           console.log(error);
         });
     }
