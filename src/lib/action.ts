@@ -56,7 +56,10 @@ export async function createResult(formData: FormData) {
   redirect('/result');
 }
 
-export async function loginUser(formData: FormData) {
+export async function loginUser(
+  prevState: string | undefined,
+  formData: FormData
+) {
   const { username } = UserSchema.parse({
     username: formData.get('username'),
   });
@@ -73,13 +76,13 @@ export async function loginUser(formData: FormData) {
 
     // Create session
     await createSession(user._id.toString(), username);
-
-    revalidatePath('/');
-    redirect('/');
   } catch (error) {
     console.error('Login error:', error);
-    return { error: 'Failed to login' };
+    return 'Failed to login';
   }
+
+  revalidatePath('/');
+  redirect('/');
 }
 
 export async function logoutUser() {
