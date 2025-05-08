@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import StyledComponentsRegistry from '@/lib/registry';
 import LayoutWrapper from '../components/Wrapper';
+import { Analytics } from '@vercel/analytics/next';
 
 export default function RootLayout({
   children,
@@ -14,6 +15,7 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <LayoutWrapper>{children}</LayoutWrapper>
         </StyledComponentsRegistry>
+        <Analytics />
       </body>
     </html>
   );
